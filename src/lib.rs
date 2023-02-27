@@ -19,9 +19,9 @@ pub struct UserCamera;
 #[reflect(Component)]
 pub struct UserCursor;
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 #[derive(Debug)]
-pub struct CursorSettings<P, Curs = UserCursor, Cam= UserCamera>
+pub struct CursorSettings<P= &'static str, Curs = UserCursor, Cam= UserCamera>
     where
         P: Into<bevy::asset::AssetPath<'static>> + Send + Sync + Clone + 'static,
         Curs: Component + Send + Sync + Clone + 'static,
@@ -41,6 +41,10 @@ impl<P, Curs, Cam> CursorSettings<P, Curs, Cam>  where
     pub fn build(self)-> FancyCursor<P, Curs, Cam>{
         FancyCursor::from(self)
     }
+    pub fn img_path(mut self, path: P) -> Self {
+        self.img_path= path;
+        self
+    }
     pub fn size(mut self, size: Size) -> Self{
         self.size= size;
         self
@@ -58,9 +62,8 @@ impl<P, Curs, Cam> CursorSettings<P, Curs, Cam>  where
         self
     }
 }
-impl<P, Cam> CursorSettings<P, UserCursor, Cam> where
-        P: Into<bevy::asset::AssetPath<'static>> + Send + Sync + Clone + 'static,
-        Cam: Component + Send + Sync + Clone + 'static, {
+impl<P> CursorSettings<P> where
+        P: Into<bevy::asset::AssetPath<'static>> + Send + Sync + Clone + 'static, {
     pub fn from_image(path: P) -> Self {
         Self{
             img_path: path,
@@ -73,8 +76,10 @@ impl<P, Cam> CursorSettings<P, UserCursor, Cam> where
     }
 }
 
-impl Default for CursorSettings<&str, UserCursor, UserCamera> {
-    fn default() -> Self {
+impl CursorSettings<&str, UserCursor, UserCamera> {
+    /// Alternative to `Default::default` which doesn't infer types well.
+    /// This will coerce generic type parameters to default types.
+    pub fn basic() -> Self {
         Self::from_image(r"texture\fancy cursor.png")
     }
 }
@@ -86,20 +91,15 @@ impl Default for CursorSettings<&str, UserCursor, UserCamera> {
 ///
 /// Internally plugin uses `Query<&Camera, With<Cam>>` each frame and on startup to get camera rendering target.
 /// If that target isn't `bevy::render::camera::RenderTarget::Window`, primary window will be used instead.
-#[derive(Clone, From)]
+#[derive(Clone, From, Default)]
 #[derive(Deref, DerefMut, AsRef, AsMut)]
 #[derive(Debug)]
-pub struct FancyCursor<P, Curs = UserCursor, Cam= UserCamera>
+pub struct FancyCursor<P= &'static str, Curs = UserCursor, Cam= UserCamera>
     where
         P: Into<bevy::asset::AssetPath<'static>> + Send + Sync + Clone + 'static,
         Curs: Component + Send + Sync + Clone + 'static,
         Cam: Component + Send + Sync + Clone + 'static, {
     pub settings: std::sync::Arc<CursorSettings<P, Curs, Cam>>,
-}
-impl Default for FancyCursor<&str, UserCursor, UserCamera>{
-    fn default() -> Self {
-        Self{ settings: Default::default() }
-    }
 }
 
 impl<P, Curs, Cam> Plugin for FancyCursor<P, Curs, Cam>
@@ -111,7 +111,7 @@ impl<P, Curs, Cam> Plugin for FancyCursor<P, Curs, Cam>
     fn build(&self, app: &mut App) {
         app
             .add_startup_system_to_stage(StartupStage::PostStartup, self.create_setup())
-            .add_system(Self::update)
+            .add_system(self.create_update())
         ;
     }
 }
@@ -157,36 +157,34 @@ impl<P, Curs, Cam> FancyCursor<P, Curs, Cam>
         }
     }
 
-    #[allow(clippy::type_complexity)]
-    pub fn update(
-        // to get window dimensions
-        wins: Res<Windows>,
-        // to get camera rendering target
-        camera: Query<&Camera, With<Cam>>,
-        mut cursor: Query<
-            (&mut Style, &mut Visibility),
-            With<Curs>,
-        >,
+    pub fn create_update(&self) -> impl Fn(
+        Res<Windows>,
+        Query<&Camera, With<Cam>>,
+        Query<(&mut Style, &mut Visibility), With<Curs>>,
     ) {
-        let camera = camera.single();
+        let settings= std::sync::Arc::clone(&self.settings);
 
-        // get the window that the camera is displaying to (or the primary window)
-        let win = if let RenderTarget::Window(win_id) = camera.target {
-            wins.get(win_id).unwrap()
-        } else {
-            wins.get_primary().unwrap()
-        };
-        let (mut img_style, mut visibility) = cursor.single_mut();
+        move |wins: Res<Windows>, camera: Query<&Camera, With<Cam>>, mut cursor: Query<(&mut Style, &mut Visibility), With<Curs>>| {
+            let camera = camera.single();
 
-        // check if the cursor is inside the window and get its position
-        if let Some(screen_pos) = win.cursor_position() {
-            img_style.position.left = Val::Px(screen_pos.x);
-            img_style.position.top = Val::Px(win.height() - screen_pos.y);
-            *visibility = Visibility::VISIBLE;
-        } else {
-            img_style.position.left = Val::Px(-100.);
-            img_style.position.top = Val::Px(-100.);
-            *visibility = Visibility::INVISIBLE;
+            // get the window that the camera is displaying to (or the primary window)
+            let win = if let RenderTarget::Window(win_id) = camera.target {
+                wins.get(win_id).unwrap()
+            } else {
+                wins.get_primary().unwrap()
+            };
+            let (mut img_style, mut visibility) = cursor.single_mut();
+
+            // check if the cursor is inside the window and get its position
+            if let Some(screen_pos) = win.cursor_position() {
+                img_style.position.left = Val::Px(screen_pos.x +settings.render_offset.x);
+                img_style.position.top = Val::Px(win.height() - (screen_pos.y + settings.render_offset.y));
+                *visibility = Visibility::VISIBLE;
+            } else {
+                img_style.position.left = Val::Px(-100.);
+                img_style.position.top = Val::Px(-100.);
+                *visibility = Visibility::INVISIBLE;
+            }
         }
     }
 }
