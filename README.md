@@ -35,6 +35,8 @@ fn spawn_camera(mut commands: Commands){
     ));
 }
 ```
+Gives this app with fancy cursor from assets folder.  
+[Image picturing resulting app.](./Example with fancy cursor.png)
 
 # Contact
 tomasz_nehring@outlook.com
