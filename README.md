@@ -22,7 +22,7 @@ fn main() {
                 .size(Size::new(Val::Px(50.0), Val::Px(70.0)))
                 .build()
         )
-        // You can spawn camera in `bevy::app::StartupStage::Startup`, which is before (AND MUST BE) `PostStartup`.
+        // You can spawn camera in `bevy::app::StartupStage::Startup`, which is (AND MUST BE) BEFORE `PostStartup`.
         .add_startup_system(spawn_camera)
         .run()
 }
