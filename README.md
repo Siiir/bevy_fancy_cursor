@@ -11,3 +11,6 @@ You can help me in this though.
 
 # PS
 Sorry, if I harmed English language anywhere.
+
+# Contact
+tomasz_nehring@outlook.com
