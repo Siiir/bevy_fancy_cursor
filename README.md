@@ -36,7 +36,7 @@ fn spawn_camera(mut commands: Commands){
 }
 ```
 Gives this app with fancy cursor from assets folder.  
-[Image picturing resulting app.](./Example with fancy cursor.png)
+![Image picturing resulting app.](https://raw.githubusercontent.com/Siiir/bevy_fancy_cursor/master/Example%20with%20fancy%20cursor.png)
 
 # Contact
 tomasz_nehring@outlook.com
