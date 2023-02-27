@@ -1,4 +1,3 @@
-use bevy::app::App;
 use bevy::prelude::*;
 
 fn main() {
