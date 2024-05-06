@@ -6,12 +6,11 @@ description = "Facilitates creating custom cursor in bevy-based app. Uses bevy's
 authors = ["Tomasz Nehring"]
 license = "MIT"
 # Versioning
-version = "0.4.2"
+version = "0.4.3"
 edition = "2021"
 # Websites
 homepage = "https://github.com/siiir/bevy_fancy_cursor"
 repository = "https://github.com/siiir/bevy_fancy_cursor"
-documentation = "https://docs.rs/siiir-bevy_fancy_cursor/latest/bevy_fancy_cursor/"
 
 [lib]
 name = "bevy_fancy_cursor"
