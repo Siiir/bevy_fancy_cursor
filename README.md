@@ -1,5 +1,5 @@
 # bevy_fancy_cursor
-Plagin for bevy. Uses bevy's `ImageBundle` to crate a custom cursor from file with image.
+Plagin for bevy. Uses bevy's `ImageBundle` to **create a custom cursor** from an image file.
 
 ## Instalation
 #### Add to manifest file (Cargo.toml) under `[dependencies]`
@@ -37,7 +37,7 @@ fn spawn_camera(mut commands: Commands){
 ### Produces this app with fancy cursor from assets folder.  
 ![Image picturing resulting app.](https://raw.githubusercontent.com/Siiir/bevy_fancy_cursor/master/Example%20with%20fancy%20cursor.png)
 ### To run the above example with contained asset.
-Download [version](https://github.com/Siiir/bevy_fancy_cursor/releases/tag/v0.1.0-beta) I used when creating it.
+Download the [version](https://github.com/Siiir/bevy_fancy_cursor/releases/tag/v0.1.0-beta) I used when creating it.
 `cargo run` it. Enjoy.
 
 ## Contribute
@@ -45,8 +45,4 @@ if you want to see project growing and `FancyCursor` becoming more generic.
 
 # Contact
 tomasz_nehring@outlook.com
-
-## PS
-Sorry, if I harmed English language anywhere.
-
 

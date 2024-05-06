@@ -2,11 +2,12 @@
 name = "bevy_fancy_cursor"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT"
+authors = ["Tomasz Nehring"]
+repository = "github.com/siiir/bevy_fancy_cursor"
 
 [dependencies]
-bevy = "0.9.1"
+bevy = {version = "0.9.1"}
 derive_more = "0.99.17"
 
 [profile.dev]
