@@ -3,11 +3,10 @@ Facilitates **creating custom cursor** in bevy-based app. Uses bevy's `ImageBund
 
 
 ## Instalation
-#### Add to manifest file (Cargo.toml) under `[dependencies]`
+* From inside of your project, run:
+`cargo add siiir-bevy_fancy_cursor`
+* **Or** add to manifest file (Cargo.toml) under `[dependencies]`
 ```bevy_fancy_cursor = { git = "https://github.com/Siiir/bevy_fancy_cursor" }```
-
-Until I find some time to chat with bevy team and made better docs this mini-project won't be published on crates.io.  
-You can help me in this though.
 
 
 ## Example
@@ -45,9 +44,13 @@ Download the [version](https://github.com/Siiir/bevy_fancy_cursor/releases/tag/v
 `cargo run` it. Enjoy.
 
 
+## [Documentation](https://docs.rs/siiir-bevy_fancy_cursor/latest/bevy_fancy_cursor/)
+
+
 ## Contribute
 if you want to see project growing and `FancyCursor` becoming more generic.
 
-# Contact
+
+## Contact
 tomasz_nehring@outlook.com
 
