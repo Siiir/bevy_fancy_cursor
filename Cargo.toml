@@ -1,10 +1,20 @@
 [package]
-name = "bevy_fancy_cursor"
-version = "0.1.0"
-edition = "2021"
-license = "MIT"
+# About
+name = "siiir-bevy_fancy_cursor"
+description = "Facilitates creating custom cursor in bevy-based app. Uses bevy's `ImageBundle` to replace the original cursor with moving UI element."
+# Ownership
 authors = ["Tomasz Nehring"]
+license = "MIT"
+# Versioning
+version = "0.4.0"
+edition = "2021"
+# Websites
+homepage = "github.com/siiir/bevy_fancy_cursor"
 repository = "github.com/siiir/bevy_fancy_cursor"
+documentation = "https://docs.rs/siiir-bevy_fancy_cursor/latest/bevy_fancy_cursor/"
+
+[lib]
+name = "bevy_fancy_cursor"
 
 [dependencies]
 bevy = {version = "0.9.1"}
