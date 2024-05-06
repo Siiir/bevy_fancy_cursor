@@ -1,15 +1,16 @@
 # bevy_fancy_cursor
-Facilitates **creating custom cursor** in bevy-based app. Uses bevy's `ImageBundle` to replace the original cursor with moving UI element.
+Facilitates **creating a custom cursor** in bevy-based app. Uses bevy's `ImageBundle` to replace the original cursor with a moving UI element.
 
 
 ## Instalation
-* From inside of your project, run:
+From inside of your project
+* run:  
 `cargo add siiir-bevy_fancy_cursor`
-* **Or** add to manifest file (Cargo.toml) under `[dependencies]`
+* **or** add to manifest file (Cargo.toml) under `[dependencies]`  
 ```bevy_fancy_cursor = { git = "https://github.com/Siiir/bevy_fancy_cursor" }```
 
 
-## Example
+## Example usage
 ```
 use bevy::prelude::*;
 
@@ -36,7 +37,7 @@ fn spawn_camera(mut commands: Commands){
 }
 ```
 
-### Produces this app with fancy cursor from assets folder.  
+### Produces this app with a fancy cursor from the "./assets" folder.  
 ![Image picturing resulting app.](https://raw.githubusercontent.com/Siiir/bevy_fancy_cursor/master/Example%20with%20fancy%20cursor.png)
 
 ### To run the above example with contained asset.

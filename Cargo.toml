@@ -9,8 +9,8 @@ license = "MIT"
 version = "0.4.0"
 edition = "2021"
 # Websites
-homepage = "github.com/siiir/bevy_fancy_cursor"
-repository = "github.com/siiir/bevy_fancy_cursor"
+homepage = "https://github.com/siiir/bevy_fancy_cursor"
+repository = "https://github.com/siiir/bevy_fancy_cursor"
 documentation = "https://docs.rs/siiir-bevy_fancy_cursor/latest/bevy_fancy_cursor/"
 
 [lib]
